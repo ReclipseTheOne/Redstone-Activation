@@ -1,0 +1,1 @@
+Configurable reward for activating a redstone ore.

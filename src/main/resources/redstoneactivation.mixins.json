@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.reclipse.redstoneactivation.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "redstoneactivation.refmap.json",
+  "mixins": [
+    "RedStoneOreBlockMixin"
+  ],
+  "client": [],
+  "minVersion": "0.8"
+}

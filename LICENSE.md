@@ -1,0 +1,1 @@
+As stated in gradle.properties's field: 'mod_license'.
