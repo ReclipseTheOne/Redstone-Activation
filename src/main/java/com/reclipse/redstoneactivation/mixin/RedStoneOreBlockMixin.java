@@ -43,7 +43,7 @@ public class RedStoneOreBlockMixin {
         if (level.isClientSide()) return;
         if (state.getValue(RedStoneOreBlock.LIT)) return;
 
-        ItemStack reward = new ItemStack(Config.rewardItem.get());
+        ItemStack reward = Config.rewardItem.getStack();
         if (!player.addItem(reward)) {
             player.drop(reward, false);
         }
