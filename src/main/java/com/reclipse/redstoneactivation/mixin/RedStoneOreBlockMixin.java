@@ -42,6 +42,7 @@ public class RedStoneOreBlockMixin {
     private void redstoneactivation$giveRewardIfUnlit(BlockState state, Level level, Player player) {
         if (level.isClientSide()) return;
         if (state.getValue(RedStoneOreBlock.LIT)) return;
+        if (!Config.isAcceptableOre(state.getBlock())) return;
 
         ItemStack reward = Config.rewardItem.getStack();
         if (!player.addItem(reward)) {

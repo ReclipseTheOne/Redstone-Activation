@@ -9,12 +9,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.List;
 
 public class Config {
 
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.ConfigValue<String> rewardItemId;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> acceptableOreIds;
     public static final ItemSupplier rewardItem;
 
     static {
@@ -29,8 +33,25 @@ public class Config {
                 .comment("  'minecraft:potion{Potion:\"minecraft:strong_healing\"}'")
                 .define("rewardItem", "minecraft:redstone");
 
+        acceptableOreIds = builder
+                .comment("List of block IDs (blocks that extend redstone ore) that are accepted to drop the reward item.")
+                .comment("Only blocks whose ID is in this list will give the reward when activated.")
+                .comment("For example, with 'minecraft:redstone_ore' present but 'minecraft:deepslate_redstone_ore' omitted,")
+                .comment("only the normal stone variant works.")
+                .defineListAllowEmpty("acceptableOreIds",
+                        List.of("minecraft:redstone_ore"),
+                        obj -> obj instanceof String s && ResourceLocation.isValidResourceLocation(s));
+
         SPEC = builder.build();
         rewardItem = new ItemSupplier();
+    }
+
+    /**
+     * Returns true if the given block's ID is in the configured list of accepted ore blocks.
+     */
+    public static boolean isAcceptableOre(Block block) {
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+        return acceptableOreIds.get().contains(id.toString());
     }
 
     /**
