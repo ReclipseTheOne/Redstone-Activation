@@ -227,7 +227,7 @@ if (System.getenv('CURSEFORGE_TOKEN')) {
         disableVersionDetection()
 
         // Upload main jar
-        def mainFile = upload(curseforge_project_id, jar)
+        def mainFile = upload(curseforge_project_id, tasks.named('reobfJar').get())
         mainFile.changelog = System.getenv('CHANGELOG') ?: 'See GitHub for changes'
         mainFile.changelogType = 'markdown'
         mainFile.releaseType = System.getenv('RELEASE_TYPE') ?: 'release'
@@ -251,7 +251,7 @@ if (System.getenv('MODRINTH_TOKEN')) {
         projectId = System.getenv("MODRINTH_PROJECT_SLUG")
         versionNumber = mod_version
         versionType = System.getenv('RELEASE_TYPE') ?: 'release'
-        uploadFile = jar
+        uploadFile = tasks.named('reobfJar').get()
         additionalFiles = [tasks.named("sourcesJar"), tasks.named("javadocJar")]
         changelog = System.getenv('CHANGELOG') ?: 'See GitHub for changes'
         gameVersions = [minecraft_version]
